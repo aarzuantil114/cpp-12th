@@ -1,0 +1,27 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    // Command to get memory information
+    const char* cmd = "free -h";
+    
+    // Open a pipe to the system command
+    FILE* fp = popen(cmd, "r");
+    
+    if (fp == nullptr) {
+        std::cerr << "Failed to run command" << std::endl;
+        return 1;
+    }
+
+    // Read and print the output of the command
+    char buffer[128];
+    while (fgets(buffer, sizeof(buffer), fp) != nullptr) {
+        std::cout << buffer;
+    }
+    
+    // Close the pipe
+    fclose(fp);
+    
+    return 0;
+}
